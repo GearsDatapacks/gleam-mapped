@@ -193,3 +193,19 @@ pub fn filter(
     False -> map
   }
 }
+
+/// Converts a map to a string, allowing you to view its contents.
+/// This should only be used for debugging the contents of a map.
+/// 
+/// The output format of this is not guaranteed and may change any time.
+/// 
+pub fn inspect(map: BiMap(left, right)) -> String {
+  let entries =
+    map
+    |> to_list
+    |> list.map(fn(entry) {
+      string.inspect(entry.0) <> " <-> " <> string.inspect(entry.1)
+    })
+    |> string.join(", ")
+  "{ " <> entries <> " }"
+}

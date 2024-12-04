@@ -155,3 +155,9 @@ pub fn filter_test() {
   |> mapped.filter(fn(a, b) { a % 2 == 1 && b % 2 == 0 })
   |> should.equal(mapped.from_list([#(3, 4), #(9, 2)]))
 }
+
+pub fn inspect_test() {
+  mapped.from_list([#(1, 2), #(3, 4), #(5, 6)])
+  |> mapped.inspect
+  |> should.equal("{ 1 <-> 2, 3 <-> 4, 5 <-> 6 }")
+}
