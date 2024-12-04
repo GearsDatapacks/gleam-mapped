@@ -78,15 +78,29 @@ pub fn delete_by_right(
     Error(_) -> map
   }
 }
+
+pub fn has_left(map: BiMap(left, right), key: left) -> Bool {
+  dict.has_key(map.left_to_right, key)
+}
+
+pub fn has_right(map: BiMap(left, right), key: right) -> Bool {
+  dict.has_key(map.right_to_left, key)
+}
+
+pub fn left_values(map: BiMap(left, right)) -> List(left) {
+  dict.keys(map.left_to_right)
+}
+
+pub fn right_values(map: BiMap(left, right)) -> List(right) {
+  dict.keys(map.right_to_left)
+}
+
 // FUNCTIONS TO IMPLEMENT
-// contains_*
-// *_values
 // combine
 // drop
 // each
 // filter
 // fold
-// is_empty
 // map_*_values
 // merge
 // take
