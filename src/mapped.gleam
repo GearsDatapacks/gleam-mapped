@@ -5,6 +5,8 @@ pub opaque type BiMap(left, right) {
   BiMap(left_to_right: Dict(left, right), right_to_left: Dict(right, left))
 }
 
+// Foundation Functions
+
 pub fn new() -> BiMap(left, right) {
   BiMap(dict.new(), dict.new())
 }
@@ -12,6 +14,8 @@ pub fn new() -> BiMap(left, right) {
 pub fn size(of map: BiMap(left, right)) -> Int {
   dict.size(map.left_to_right)
 }
+
+// Modifying maps
 
 pub fn get_by_left(
   from map: BiMap(left, right),
@@ -25,44 +29,6 @@ pub fn get_by_right(
   get key: right,
 ) -> Result(left, Nil) {
   dict.get(map.right_to_left, key)
-}
-
-pub fn insert(
-  map: BiMap(left, right),
-  left: left,
-  right: right,
-) -> BiMap(left, right) {
-  let map = map |> delete_by_left(left) |> delete_by_right(right)
-
-  BiMap(
-    left_to_right: dict.insert(map.left_to_right, left, right),
-    right_to_left: dict.insert(map.right_to_left, right, left),
-  )
-}
-
-pub fn from_list(list: List(#(left, right))) -> BiMap(left, right) {
-  use map, #(left, right) <- list.fold(list, new())
-  insert(map, left, right)
-}
-
-pub fn to_list(map: BiMap(left, right)) -> List(#(left, right)) {
-  dict.to_list(map.left_to_right)
-}
-
-pub fn from_dict(dict: Dict(left, right)) -> BiMap(left, right) {
-  let right_to_left =
-    dict.fold(dict, dict.new(), fn(ltr, left, right) {
-      dict.insert(ltr, right, left)
-    })
-  BiMap(left_to_right: dict, right_to_left:)
-}
-
-pub fn left_to_right(map: BiMap(left, right)) -> Dict(left, right) {
-  map.left_to_right
-}
-
-pub fn right_to_left(map: BiMap(left, right)) -> Dict(right, left) {
-  map.right_to_left
 }
 
 pub fn delete_by_left(
@@ -95,6 +61,48 @@ pub fn delete_by_right(
   }
 }
 
+pub fn insert(
+  map: BiMap(left, right),
+  left: left,
+  right: right,
+) -> BiMap(left, right) {
+  let map = map |> delete_by_left(left) |> delete_by_right(right)
+
+  BiMap(
+    left_to_right: dict.insert(map.left_to_right, left, right),
+    right_to_left: dict.insert(map.right_to_left, right, left),
+  )
+}
+
+// Conversion Functions
+
+pub fn from_list(list: List(#(left, right))) -> BiMap(left, right) {
+  use map, #(left, right) <- list.fold(list, new())
+  insert(map, left, right)
+}
+
+pub fn to_list(map: BiMap(left, right)) -> List(#(left, right)) {
+  dict.to_list(map.left_to_right)
+}
+
+pub fn from_dict(dict: Dict(left, right)) -> BiMap(left, right) {
+  let right_to_left =
+    dict.fold(dict, dict.new(), fn(ltr, left, right) {
+      dict.insert(ltr, right, left)
+    })
+  BiMap(left_to_right: dict, right_to_left:)
+}
+
+pub fn left_to_right(map: BiMap(left, right)) -> Dict(left, right) {
+  map.left_to_right
+}
+
+pub fn right_to_left(map: BiMap(left, right)) -> Dict(right, left) {
+  map.right_to_left
+}
+
+// Working with left and right sides
+
 pub fn has_left(map: BiMap(left, right), key: left) -> Bool {
   dict.has_key(map.left_to_right, key)
 }
@@ -110,6 +118,8 @@ pub fn left_values(map: BiMap(left, right)) -> List(left) {
 pub fn right_values(map: BiMap(left, right)) -> List(right) {
   dict.keys(map.right_to_left)
 }
+
+// Iterating functions
 
 pub fn fold(
   over map: BiMap(left, right),
