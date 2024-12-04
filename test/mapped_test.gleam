@@ -159,5 +159,5 @@ pub fn filter_test() {
 pub fn inspect_test() {
   mapped.from_list([#(1, 2), #(3, 4), #(5, 6)])
   |> mapped.inspect
-  |> should.equal("{ 1 <-> 2, 3 <-> 4, 5 <-> 6 }")
+  |> should.equal("{ 1 <> 2, 3 <> 4, 5 <> 6 }")
 }

@@ -204,7 +204,7 @@ pub fn inspect(map: BiMap(left, right)) -> String {
     map
     |> to_list
     |> list.map(fn(entry) {
-      string.inspect(entry.0) <> " <-> " <> string.inspect(entry.1)
+      string.inspect(entry.0) <> " <> " <> string.inspect(entry.1)
     })
     |> string.join(", ")
   "{ " <> entries <> " }"
