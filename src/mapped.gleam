@@ -95,12 +95,32 @@ pub fn right_values(map: BiMap(left, right)) -> List(right) {
   dict.keys(map.right_to_left)
 }
 
+pub fn fold(
+  over map: BiMap(left, right),
+  from initial: acc,
+  with callback: fn(acc, left, right) -> acc,
+) -> acc {
+  dict.fold(map.left_to_right, initial, callback)
+}
+
+pub fn each(
+  in map: BiMap(left, right),
+  run callback: fn(left, right) -> a,
+) -> Nil {
+  dict.each(map.left_to_right, callback)
+}
+
+pub fn filter(in map: BiMap(left, right), keeping predicate: fn(left, right) -> Bool) -> BiMap(left, right) {
+  use map, left, right <- fold(map, new())
+  case predicate(left, right) {
+    True -> insert(map, left, right)
+    False -> map
+  }
+}
+
 // FUNCTIONS TO IMPLEMENT
 // combine
 // drop
-// each
-// filter
-// fold
 // map_*_values
 // merge
 // take
