@@ -49,6 +49,22 @@ pub fn to_list(map: BiMap(left, right)) -> List(#(left, right)) {
   dict.to_list(map.left_to_right)
 }
 
+pub fn from_dict(dict: Dict(left, right)) -> BiMap(left, right) {
+  let right_to_left =
+    dict.fold(dict, dict.new(), fn(ltr, left, right) {
+      dict.insert(ltr, right, left)
+    })
+  BiMap(left_to_right: dict, right_to_left:)
+}
+
+pub fn left_to_right(map: BiMap(left, right)) -> Dict(left, right) {
+  map.left_to_right
+}
+
+pub fn right_to_left(map: BiMap(left, right)) -> Dict(right, left) {
+  map.right_to_left
+}
+
 pub fn delete_by_left(
   from map: BiMap(left, right),
   remove key: left,
@@ -110,18 +126,13 @@ pub fn each(
   dict.each(map.left_to_right, callback)
 }
 
-pub fn filter(in map: BiMap(left, right), keeping predicate: fn(left, right) -> Bool) -> BiMap(left, right) {
+pub fn filter(
+  in map: BiMap(left, right),
+  keeping predicate: fn(left, right) -> Bool,
+) -> BiMap(left, right) {
   use map, left, right <- fold(map, new())
   case predicate(left, right) {
     True -> insert(map, left, right)
     False -> map
   }
 }
-
-// FUNCTIONS TO IMPLEMENT
-// combine
-// drop
-// map_*_values
-// merge
-// take
-// upsert
