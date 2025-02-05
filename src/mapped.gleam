@@ -27,7 +27,7 @@ pub opaque type BiMap(left, right) {
   BiMap(left_to_right: Dict(left, right), right_to_left: Dict(right, left))
 }
 
-// Foundation Functions
+// ------------------- FOUNDATION FUNCTIONS
 
 /// Creates an new empty map.
 /// 
@@ -48,7 +48,7 @@ pub fn size(of map: BiMap(left, right)) -> Int {
   dict.size(map.left_to_right)
 }
 
-// Modifying maps
+// ------------------- MODIFYING MAPS
 
 /// Returns the right value associated with this left value, if it exists.
 /// 
@@ -172,9 +172,9 @@ pub fn delete_by_right(
 /// ```
 /// 
 pub fn insert(
-  map: BiMap(left, right),
-  left: left,
-  right: right,
+  into map: BiMap(left, right),
+  left left: left,
+  right right: right,
 ) -> BiMap(left, right) {
   let map = map |> delete_by_left(left) |> delete_by_right(right)
 
@@ -184,7 +184,7 @@ pub fn insert(
   )
 }
 
-// Conversion Functions
+// ------------------- CONVERSION FUNCTIONS
 
 /// Creates a map from a list of tuples containing a left and right value.
 /// 
@@ -265,7 +265,7 @@ pub fn right_to_left(map: BiMap(left, right)) -> Dict(right, left) {
   map.right_to_left
 }
 
-// Working with left and right sides
+// ------------------- WORKING WITH LEFT AND RIGHT SIDES
 
 /// Returns whether the map contains an entry with the given left value.
 /// 
@@ -323,7 +323,7 @@ pub fn right_values(map: BiMap(left, right)) -> List(right) {
   dict.keys(map.right_to_left)
 }
 
-// Iterating functions
+// ------------------- ITERATING FUNCTIONS
 
 /// Iterates over the given map, folding the left and right values into a single value.
 /// 
