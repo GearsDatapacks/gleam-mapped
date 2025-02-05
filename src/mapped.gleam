@@ -1,3 +1,24 @@
+//// An implementation of a [Bidirectional Map](https://en.wikipedia.org/wiki/Bidirectional_map) in pure Gleam, using two Dicts.
+//// 
+//// Bidirectional Maps (or BiMaps) are useful when two sets of data map between each other in both directions.  
+//// For example, converting numbers to their word equivalents:
+//// 
+//// ```gleam
+//// let numbers_to_words = mapped.from_list([
+////   #(1, "one")
+////   #(2, "two")
+////   #(3, "three")
+////   #(4, "four")
+////   #(5, "five")
+//// ])
+//// 
+//// let assert Ok(word) = mapped.get_by_left(4) // -> "four"
+//// let assert Ok(number) = mapped.get_by_right("three") // -> 3
+//// ```
+//// 
+//// A single data structure can be used to perform both conversions.
+//// 
+
 import gleam/dict.{type Dict}
 import gleam/list
 import gleam/string
